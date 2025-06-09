@@ -1,0 +1,25 @@
+[project]
+name = "ai_solutions"
+version = "0.1.0"
+description = "ai_solutions using crewAI"
+authors = [{ name = "Anderson Nascimento", email = "anderson.nascimentoafsn@gmail.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=0.126.0,<1.0.0",
+    "pandas>=2.3.0",
+    "streamlit>=1.45.1",
+]
+
+[project.scripts]
+ai_solutions = "ai_solutions.main:run"
+run_crew = "ai_solutions.main:run"
+train = "ai_solutions.main:train"
+replay = "ai_solutions.main:replay"
+test = "ai_solutions.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

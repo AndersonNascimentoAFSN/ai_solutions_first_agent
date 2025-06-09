@@ -1,0 +1,88 @@
+cleaner_merger_task:
+  description: >
+    Você receberá uma lista de arquivos CSV brutos: {file_paths}.
+
+    É necessário seguir o processo completo para limpeza dos dados:
+
+    1. **Limpeza dos dados**:
+      - Corrija erros de codificação, valores ausentes, colunas mal formatadas e registros duplicados;
+      - Padronize nomes de colunas e formatos (datas, numéricos, texto);
+      - Gere versões limpas de todos os arquivos originais.
+
+    2. **Verificação de relacionamento entre os arquivos**:
+      - Avalie se há colunas em comum entre os arquivos limpos que permitam integração lógica (ex: IDs, datas);
+      - Se for possível, realize a mesclagem dos dados em um único arquivo integrado e coerente.
+
+    Regras importantes:
+    - Caso não seja possível mesclar os csv, informe isso claramente, explicando o motivo.
+  expected_output: >
+    um arquivo CSV limpo e, se aplicável, um arquivo CSV mesclado contendo os dados integrados.  
+    Retorne o caminho para o CSV mesclado em `merged_path`.
+  input_variables:
+    - file_paths
+  output_variables:
+    - merged_path 
+  agent: manager_agent
+
+answer_question_task:
+  description: >
+    Você receberá uma pergunta em linguagem natural e um csv limpo e mesclado.
+
+      Responda à pergunta **exclusivamente** com base nos dados desse arquivo, seguindo o protocolo abaixo:
+
+    1. **Carregamento e inspeção**  
+      - Leia o arquivo CSV em um DataFrame pandas.  
+      - Valide se há dados e quais colunas estão disponíveis.
+
+    2. **Classificação da pergunta**  
+       - Se for **quantitativa** (envolve somas, médias, contagens, máximos, mínimos, etc.), siga o fluxo **Q**.  
+       - Se for **qualitativa** (descritiva, categórica, tendências, insights textuais), siga o fluxo **T**.
+
+    **Fluxo Q (quantitativa):**  
+      2.1. Identifique colunas numéricas e categóricas, , identificando as que podem ser relevantes para a pergunta.  
+        - Colunas numéricas: aquelas que podem ser somadas, médias, contadas, etc.  
+        - Colunas categóricas: aquelas que podem ser usadas para agrupar ou filtrar os dados.
+      - Se a pergunta envolver agregações, determine o tipo de operação (soma, média, contagem, etc.).
+      - Se a pergunta envolver comparação entre grupos, identifique as colunas relevantes para o agrupamento e a métrica de comparação.  
+      2.2. Determine quais colunas usar para:  
+        - **Agrupamento** (colunas categóricas relevantes ao contexto).  
+        - **Cálculo** (a coluna numérica sobre a qual se fará soma, média, contagem etc.).  
+      2.3. Execute a operação pandas adequada (`groupby`, `agg`, `sort_values`, etc.).  
+      2.4. Formule a resposta com:  
+        - Valor/resultados principais.  
+        - Breve explicação do cálculo realizado.  
+        - Uma amostra de linhas do DataFrame (se relevante) para evidenciar.
+      2.5. Exemplos de perguntas e respostas: 
+        - Pergunta: "Qual é o fornecedor que teve maior montante recebido?"
+        - Resposta: "CHEMYUNION LTDA — R$ 1.292.418,75"
+        - Exemplo do código python utilizado para responder a pergunta:
+          ```python
+            df_data = pd.read_csv("/home/andersonnascimento/develop/github/ai-agents/crew-ai/test-2/merged_cleaned.csv")
+            fornecedores_montante = df_data.groupby("RAZÃO SOCIAL EMITENTE_x")["VALOR TOTAL"].sum().sort_values(ascending=False)
+            fornecedor_top = fornecedores_montante.head(1)
+            fornecedor_top
+          ```
+
+    **Fluxo T (qualitativa):**  
+      2.1. Analise padrões nos dados (distribuições, categorias mais frequentes, correlações simples).  
+      2.2. Extraia exemplos concretos que sustentem seu comentário (por exemplo, categorias mais comuns, outliers relevantes).  
+      2.3. Produza uma resposta interpretativa, clara e embasada nos dados.
+
+    3. **Condições de falha**  
+      - Se faltar qualquer coluna essencial para responder à pergunta, retorne:  
+        “Não é possível responder porque falta a coluna ‘X’.”  
+      - Se o DataFrame estiver vazio, retorne:  
+        “Não há registros suficientes para responder a essa pergunta.”
+
+    4. **Formato de saída**  
+      - Texto objetivo: resposta final + breve descrição do método de extração.  
+      - Quando apropriado, inclua um pequeno trecho de tabela (máx. 5 linhas) para evidência.
+  expected_output: >
+    Um texto que:
+      - Responda de forma direta à pergunta “{question}”;
+      - Explique sucintamente o processo de análise;
+      - (Opcional) Apresente um trecho de tabela como evidência.
+  input_variables:
+    - question
+    - merged_path
+  agent: manager_agent
