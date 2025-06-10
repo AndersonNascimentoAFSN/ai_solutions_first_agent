@@ -24,7 +24,7 @@ def run(question: str):
     
     try:
         project_root = os.getcwd()
-        data_dir = os.path.join(project_root, "data")
+        data_dir = os.path.join(project_root, "data", "uploads") 
         os.makedirs(data_dir, exist_ok=True)
 
         pattern = os.path.join(data_dir, "**", "*.csv")

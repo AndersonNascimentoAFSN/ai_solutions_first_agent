@@ -57,7 +57,7 @@ answer_question_task:
         - Resposta: "CHEMYUNION LTDA — R$ 1.292.418,75"
         - Exemplo do código python utilizado para responder a pergunta:
           ```python
-            df_data = pd.read_csv("/home/andersonnascimento/develop/github/ai-agents/crew-ai/test-2/merged_cleaned.csv")
+            df_data = pd.read_csv("/merged_cleaned.csv")
             fornecedores_montante = df_data.groupby("RAZÃO SOCIAL EMITENTE_x")["VALOR TOTAL"].sum().sort_values(ascending=False)
             fornecedor_top = fornecedores_montante.head(1)
             fornecedor_top
@@ -81,6 +81,10 @@ answer_question_task:
     Um texto que:
       - Responda de forma direta à pergunta “{question}”;
       - Explique sucintamente o processo de análise;
+      - Caso a pergunta seja quantitativa, apresente o valor numerico / resultados principais, faça os calculos necessários e explique o método utilizado;
+      - Caso a pergunta seja qualitativa, apresente uma análise interpretativa dos dados;
+      - Se necessário, indique que não é possível responder devido à falta de colunas essenciais ou dados insuficientes;
+      - Se a pergunta for respondida com base em uma tabela, apresente um trecho de tabela como evidência.
       - (Opcional) Apresente um trecho de tabela como evidência.
   input_variables:
     - question

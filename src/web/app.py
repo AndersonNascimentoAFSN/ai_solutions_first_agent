@@ -23,7 +23,7 @@ with st.sidebar:
     else:
         # Defina pasta de destino; ajuste conforme necessidade
         project_root = Path(__file__).parent.parent.parent
-        data_dir = project_root / "data"
+        data_dir = project_root / "data" / "uploads"
         data_dir.mkdir(parents=True, exist_ok=True)
         
         # Para segurança contra path traversal, limpe nomes

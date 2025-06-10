@@ -63,7 +63,7 @@ class CSVCleanerMergerTool(BaseTool):
 
         # Define caminho para o CSV mesclado
         project_root = os.getcwd()
-        data_dir = os.path.join(project_root, "data")
+        data_dir = os.path.join(project_root, "data") 
         os.makedirs(data_dir, exist_ok=True)
 
         merged_filename = "merged_cleaned.csv"
