@@ -5,7 +5,7 @@ from typing import List
 
 from ai_solutions.tools.csv_cleaner_merger_tool import CSVCleanerMergerTool
 
-llm = LLM(model="gpt-4o-mini", temperature=0)
+llm = LLM(model="gpt-4.1-nano", temperature=0)
 
 @CrewBase
 class AiSolutions():
