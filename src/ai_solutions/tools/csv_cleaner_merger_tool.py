@@ -13,7 +13,7 @@ class CSVCleanerMergerTool(BaseTool):
     def _run(self, paths: List[str]) -> str:
         cleaned_dfs: List[pd.DataFrame] = []
         for path in paths:
-            df = pd.read_csv(path)
+            df = pd.read_csv(path, encoding='utf-8', sep=None, engine='python')
 
             # 1) Remove linhas completamente vazias
             df = df.dropna(how="all")

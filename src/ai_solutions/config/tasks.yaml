@@ -28,10 +28,12 @@ answer_question_task:
   description: >
     Você receberá uma pergunta em linguagem natural e um csv limpo e mesclado.
 
-      Responda à pergunta **exclusivamente** com base nos dados desse arquivo, seguindo o protocolo abaixo:
+    Responda à pergunta **exclusivamente** com base nos dados desse arquivo, seguindo o protocolo abaixo:
 
     1. **Carregamento e inspeção**  
-      - Leia o arquivo CSV em um DataFrame pandas.  
+      - Leia o arquivo CSV em um DataFrame pandas.
+      - Utilize o Code Interpreter Tool para executar o código Python e obter o resultado.
+      - Finalize o código gerado pelo Code Interpreter Tool com: `result = <Output adequado>`. 
       - Valide se há dados e quais colunas estão disponíveis.
 
     2. **Classificação da pergunta**  
@@ -63,25 +65,25 @@ answer_question_task:
             fornecedor_top
           ```
 
-    **Fluxo T (qualitativa):**  
+      **Fluxo T (qualitativa):**  
       2.1. Analise padrões nos dados (distribuições, categorias mais frequentes, correlações simples).  
       2.2. Extraia exemplos concretos que sustentem seu comentário (por exemplo, categorias mais comuns, outliers relevantes).  
       2.3. Produza uma resposta interpretativa, clara e embasada nos dados.
 
-    3. **Condições de falha**  
+      3. **Condições de falha**  
       - Se faltar qualquer coluna essencial para responder à pergunta, retorne:  
         “Não é possível responder porque falta a coluna ‘X’.”  
       - Se o DataFrame estiver vazio, retorne:  
         “Não há registros suficientes para responder a essa pergunta.”
 
-    4. **Formato de saída**  
+      4. **Formato de saída**  
       - Texto objetivo: resposta final + breve descrição do método de extração.  
       - Quando apropriado, inclua um pequeno trecho de tabela (máx. 5 linhas) para evidência.
   expected_output: >
     Um texto que:
       - Responda de forma direta à pergunta “{question}”;
       - Explique sucintamente o processo de análise;
-      - Caso a pergunta seja quantitativa, apresente o valor numerico / resultados principais, faça os calculos necessários e explique o método utilizado;
+      - Caso a pergunta seja quantitativa, apresente o valor numerico / resultados principais;
       - Caso a pergunta seja qualitativa, apresente uma análise interpretativa dos dados;
       - Se necessário, indique que não é possível responder devido à falta de colunas essenciais ou dados insuficientes;
       - Se a pergunta for respondida com base em uma tabela, apresente um trecho de tabela como evidência.

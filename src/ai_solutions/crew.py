@@ -5,7 +5,7 @@ from typing import List
 
 from ai_solutions.tools.csv_cleaner_merger_tool import CSVCleanerMergerTool
 
-llm = LLM(model="gpt-4o-mini", temperature=0)
+llm = LLM(model="gpt-4.1", temperature=0)
 
 @CrewBase
 class AiSolutions():
@@ -37,7 +37,6 @@ class AiSolutions():
     def answer_question_task(self) -> Task:
       return Task(
           config=self.tasks_config["answer_question_task"],
-          context=[self.cleaner_merger_task()]
     )
 
     @crew
