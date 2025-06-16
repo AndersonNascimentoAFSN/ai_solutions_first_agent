@@ -56,4 +56,4 @@ if st.button("Executar verificação do conteúdo do csv"):
     result = run(user_answer)
     st.subheader("Resposta do Assistente sobre o conteúdo do csv:")
     # st.write(result.get("answer", "Nenhuma resposta encontrada."))
-    st.write(result)
+    st.write(result.raw)
