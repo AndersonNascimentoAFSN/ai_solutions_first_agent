@@ -137,6 +137,7 @@ crewai run
 ## 📂 Estrutura do Projeto
 
 ai_solutions_first_agent/
+
 ├── src/
 
 │ ├── ai_solutions/
