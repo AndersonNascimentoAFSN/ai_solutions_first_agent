@@ -138,12 +138,21 @@ crewai run
 
 ai_solutions_first_agent/
 ├── src/
+
 │ ├── ai_solutions/
+
 │ │ ├── config/ # Configurações dos agentes e tarefas
+
 │ │ ├── tools/ # Ferramentas personalizadas
+
 │ │ ├── crew.py # Configuração dos agentes
+
 │ │ └── main.py # Ponto de entrada principal
+
 │ └── web/ # Interface Streamlit
+
 ├── data/ # Dados do projeto
+
 ├── knowledge/ # Base de conhecimento
+
 └── pyproject.toml # Configuração do projeto
