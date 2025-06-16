@@ -1,54 +1,149 @@
-# AiSolutions Crew
+# 📊 AI Solutions First Agent
 
-Welcome to the AiSolutions Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Este projeto é um **Agente Autônomo de Análise de Notas Fiscais** que responde perguntas quantitativas e qualitativas com base em arquivos CSV de notas fiscais. Ele foi desenvolvido usando **CrewAI**, **Python**, **Pandas** e conta com uma interface web simples feita em **Streamlit**.
 
-## Installation
+---
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+## 🚀 Objetivo
 
-First, if you haven't already, install uv:
+O projeto tem como principal objetivo:
 
+- ✅ Ler e processar múltiplos arquivos CSV de notas fiscais  
+- ✅ Realizar limpeza, normalização e mesclagem de dados  
+- ✅ Permitir ao usuário fazer perguntas em linguagem natural (ex.: "Qual fornecedor teve maior faturamento?")  
+- ✅ Gerar respostas quantitativas e qualitativas baseadas em análise de dados com Python + Pandas  
+- ✅ Exibir os resultados de forma interativa através do Streamlit  
+
+---
+
+## 🛠️ Tecnologias e Ferramentas Utilizadas
+
+- **Python** (>=3.10, <3.14)
+- **CrewAI** (>=0.126.0) - Framework para orquestração de agentes de IA
+- **Streamlit** (>=1.45.1) - Framework para criação de interfaces web
+- **Pandas** (>=2.3.0) - Biblioteca para manipulação e análise de dados
+- **UV** - Gerenciador de dependências Python
+- **OpenAI GPT-4** (para interpretação de linguagem natural e geração de código)
+- **Custom Tools** (`CSVCleanerMergerTool`)
+
+---
+
+## 📋 Pré-requisitos
+
+- Python 3.10 ou superior
+- pip (gerenciador de pacotes Python)
+- Git
+
+---
+
+## 🚀 Instalação
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/seu-usuario/ai_solutions.git
+cd ai_solutions
+```
+
+2. Instale o UV (gerenciador de dependências):
 ```bash
 pip install uv
 ```
 
-Next, navigate to your project directory and install the dependencies:
-
-(Optional) Lock the dependencies and install them by using the CLI command:
+3. Instale as dependências do projeto:
 ```bash
 crewai install
 ```
-### Customizing
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+---
 
-- Modify `src/ai_solutions/config/agents.yaml` to define your agents
-- Modify `src/ai_solutions/config/tasks.yaml` to define your tasks
-- Modify `src/ai_solutions/crew.py` to add your own logic, tools and specific args
-- Modify `src/ai_solutions/main.py` to add custom inputs for your agents and tasks
+## ⚙️ Configuração
 
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
-
+1. Crie um arquivo `.env` na raiz do projeto e adicione sua chave da API OpenAI:
 ```bash
-$ crewai run
+OPENAI_API_KEY=sua_chave_aqui
 ```
 
-This command initializes the ai_solutions Crew, assembling the agents and assigning them tasks as defined in your configuration.
+---
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+## 🏃‍♂️ Executando o Projeto
 
-## Understanding Your Crew
+Para iniciar a interface web com Streamlit:
 
-The ai_solutions Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+```bash
+streamlit run src/web/app.py
+```
 
-## Support
+Para executar o crew de agentes de IA:
 
-For support, questions, or feedback regarding the AiSolutions Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+```bash
+crewai run
+```
 
-Let's create wonders together with the power and simplicity of crewAI.
+---
+
+## 💻 Uso
+
+1. Acesse a interface web através do navegador (geralmente em `http://localhost:8501`)
+2. Interaja com os agentes através da interface Streamlit
+3. Configure e execute tarefas conforme necessário
+4. Visualize os resultados e relatórios gerados
+
+---
+
+## 🧠 Como Funciona por Trás dos Panos
+
+1. **Upload dos arquivos CSV pelo usuário**  
+   O usuário faz o upload dos arquivos CSV contendo os dados de notas fiscais diretamente na interface do Streamlit.
+
+2. **Limpeza e normalização dos dados via `CSVCleanerMergerTool`**  
+   Os arquivos são automaticamente tratados para corrigir problemas comuns como:  
+   - Codificação de caracteres  
+   - Colunas mal formatadas  
+   - Dados duplicados  
+   - Padronização de nomes de colunas  
+   Além disso, se possível, os arquivos são mesclados em um único CSV integrado.
+
+3. **Execução de tasks específicas baseadas na pergunta feita**  
+   A pergunta do usuário é analisada para definir quais tasks serão executadas (exemplo: análise de fornecedores, cálculo de montantes, identificação de itens com maior volume).
+
+4. **Geração de código Python dinâmico usando o LLM da OpenAI**  
+   O agente utiliza um modelo da OpenAI para gerar automaticamente o código Python necessário para responder à pergunta.  
+   Exemplo: geração de um código com `pd.DataFrame.groupby()` para agrupar e somar os dados relevantes.
+
+5. **Execução segura do código usando o Code Interpreter do CrewAI**  
+   O código gerado é executado de forma controlada e segura através do Code Interpreter interno do CrewAI, garantindo que só sejam realizadas operações seguras sobre os dados.
+
+6. **Retorno da resposta direto na interface do Streamlit**  
+   Por fim, a resposta final é exibida ao usuário de forma clara e detalhada na interface Streamlit, junto com o raciocínio utilizado e, quando relevante, o código Python gerado.
+
+---
+
+## 💬 Exemplo de Perguntas que o Agente Responde
+
+### 📊 Perguntas Quantitativas:
+
+- **Qual o fornecedor que mais faturou?**
+- **Qual produto foi mais vendido em quantidade?**
+- **Qual o valor total de notas fiscais emitidas em um determinado mês?**
+
+### 📝 Perguntas Qualitativas:
+
+- **Quais os principais itens comercializados por um fornecedor específico?**
+- **Há concentração de vendas em algum período do ano?**
+- **Existem padrões de compra por região?**
+
+---
+
+## 📂 Estrutura do Projeto
+
+ai_solutions_first_agent/
+├── src/
+│ ├── ai_solutions/
+│ │ ├── config/ # Configurações dos agentes e tarefas
+│ │ ├── tools/ # Ferramentas personalizadas
+│ │ ├── crew.py # Configuração dos agentes
+│ │ └── main.py # Ponto de entrada principal
+│ └── web/ # Interface Streamlit
+├── data/ # Dados do projeto
+├── knowledge/ # Base de conhecimento
+└── pyproject.toml # Configuração do projeto
