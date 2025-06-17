@@ -1,0 +1,76 @@
+import pandas as pd
+import os
+from typing import List
+from crewai.tools import BaseTool
+
+class CSVtoJSONConverterTool(BaseTool):
+    name: str = "CSVtoJSONConverterTool"
+    description: str = (
+        "Limpa, normaliza colunas e mescla múltiplos arquivos CSV, salvando o resultado como um JSON."
+    )
+    save: str = "json_path"
+
+    def _run(self, paths: List[str]) -> str:
+        cleaned_dfs: List[pd.DataFrame] = []
+
+        for path in paths:
+            df = pd.read_csv(path, encoding='utf-8', sep=None, engine='python')
+
+            # 1) Remove linhas completamente vazias
+            df = df.dropna(how="all")
+
+            # 2) Padroniza nomes de coluna: strip, lowercase, sem acentos, underline
+            df.columns = (
+                df.columns
+                  .str.strip()
+                  .str.lower()
+                  .str.normalize('NFKD')
+                  .str.encode('ascii', errors='ignore')
+                  .str.decode('ascii')
+                  .str.replace(' ', '_')
+            )
+
+            # 3) Converte tipos numéricos quando possível
+            for col in df.select_dtypes(include=["object"]).columns:
+                coerced = pd.to_numeric(df[col], errors="ignore")
+                if not coerced.equals(df[col]):
+                    df[col] = coerced
+
+            cleaned_dfs.append(df)
+
+        if not cleaned_dfs:
+            raise ValueError("Nenhum DataFrame foi carregado.")
+
+        # Identifica colunas comuns
+        common_cols = set(cleaned_dfs[0].columns)
+        for df in cleaned_dfs[1:]:
+            common_cols &= set(df.columns)
+
+        if not common_cols:
+            raise ValueError(
+                "Não há colunas em comum para realizar o merge. "
+                f"Colunas do primeiro DF: {list(cleaned_dfs[0].columns)}."
+            )
+
+        # Usa a primeira coluna comum como chave de merge
+        merge_key = sorted(common_cols)[0]
+        print(f"Merging on column: '{merge_key}'")
+
+        # Faz o merge sucessivo (inner join)
+        merged_df = cleaned_dfs[0]
+        for df in cleaned_dfs[1:]:
+            merged_df = merged_df.merge(df, on=merge_key, how="inner")
+
+        # Define caminho para salvar o JSON
+        project_root = os.getcwd()
+        data_dir = os.path.join(project_root, "data")
+        os.makedirs(data_dir, exist_ok=True)
+
+        json_filename = "merged_cleaned.json"
+        json_path = os.path.join(data_dir, json_filename)
+
+        # Salva como JSON
+        merged_df.to_json(json_path, orient='records', force_ascii=False, indent=2)
+        print(f"JSON salvo em: {json_path}")
+
+        return json_path

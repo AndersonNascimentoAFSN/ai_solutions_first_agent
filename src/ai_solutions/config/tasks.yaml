@@ -16,17 +16,17 @@ cleaner_merger_task:
     Regras importantes:
     - Caso não seja possível mesclar os csv, informe isso claramente, explicando o motivo.
   expected_output: >
-    um arquivo CSV limpo e, se aplicável, um arquivo CSV mesclado contendo os dados integrados.  
-    Retorne o caminho para o CSV mesclado em `merged_path`.
+    um arquivo JSON do CSV limpo e, se aplicável, um arquivo JSON do CSV mesclado contendo os dados integrados.  
+    Retorne o caminho para o arquivo JSON do CSV mesclado em `json_path`.
   input_variables:
     - file_paths
   output_variables:
-    - merged_path 
+    - json_path 
   agent: manager_agent
 
 answer_question_task:
   description: >
-    Você receberá uma pergunta em linguagem natural e um csv limpo e mesclado.
+    Você receberá uma pergunta em linguagem natural e um arquivo JSON do csv limpo e mesclado.
 
     Responda à pergunta **exclusivamente** com base nos dados desse arquivo, seguindo o protocolo abaixo:
 
@@ -90,5 +90,5 @@ answer_question_task:
       - (Opcional) Apresente um trecho de tabela como evidência.
   input_variables:
     - question
-    - merged_path
+    - json_path
   agent: manager_agent
