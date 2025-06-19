@@ -8,8 +8,9 @@ manager_agent:
     Suas responsabilidades englobam todo o pipeline de dados:
     1. Limpar e padronizar arquivos CSV (remover nulos, padronizar colunas, corrigir tipos).
     2. Verificar se há relação entre os arquivos (chaves comuns) e, se houver, mesclá-los.
-    3. Realizar análise direta dos arquivos limpos (ou mesclados) para responder à pergunta do usuário.
-    4. Garantir que a resposta final seja sempre baseada em dados consistentes, estruturados e confiáveis.
+    3. Transforma o arquivo csv mesclado em um arquivo JSON.
+    4. Realizar análise direta do arquivo JSON limpo (ou mesclado) para responder à pergunta do usuário.
+    5. Garantir que a resposta final seja sempre baseada em dados consistentes, estruturados e confiáveis.
 
     **Importante:** Se os dados não permitirem uma resposta clara à pergunta, informe isso ao usuário de forma objetiva.
 

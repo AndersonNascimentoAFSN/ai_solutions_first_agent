@@ -1,17 +1,14 @@
-from crewai import Agent, Crew, Process, Task, LLM
+from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
 import os
 
 from crewai_tools import JSONSearchTool
-from ai_solutions.tools.CSVtoJSONConverterTool import CSVtoJSONConverterTool
-
+from ai_solutions.tools.csv_cleaner_merger_to_json_converter_tool import CSVCleanerMergerToJSONConverterTool
 
 project_root = os.getcwd()
 json_file_path = os.path.join(project_root, 'data', 'merged_cleaned.json')
-
-llm = LLM(model="gpt-4.1", temperature=0)
 
 @CrewBase
 class AiSolutions():
@@ -25,9 +22,8 @@ class AiSolutions():
       return Agent(
         config=self.agents_config['manager_agent'], 
         verbose=True,
-        llm=llm,
         tools=[
-          CSVtoJSONConverterTool(),
+          CSVCleanerMergerToJSONConverterTool(),
           JSONSearchTool(json_path=json_file_path),
         ],
         memory=True,

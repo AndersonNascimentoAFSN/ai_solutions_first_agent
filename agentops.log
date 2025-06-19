@@ -1,0 +1,9 @@
+2025-06-19 14:14:42,539 - INFO - [ConcurrentFuturesInstrumentor] Successfully instrumented concurrent.futures.ThreadPoolExecutor
+2025-06-19 14:14:42,539 - INFO - AgentOps: Successfully instrumented 'ConcurrentFuturesInstrumentor' for package 'python'.
+2025-06-19 14:14:42,544 - INFO - AgentOps: 'crewai' is the first-targeted agentic library. Will uninstrument providers if any are/become active.
+2025-06-19 14:14:42,553 - INFO - AgentOps: Successfully instrumented 'CrewaiInstrumentor' for package 'agentops.instrumentation.agentic.crewai'.
+2025-06-19 14:14:42,554 - INFO - Session Replay for default trace: https://app.agentops.ai/sessions?trace_id=032f86723cda06fd2fe8c818b6cdde44
+2025-06-19 14:14:52,116 - WARNING - ToolEvent() is deprecated and will be removed in v4 in the future. Automatically tracked in v4.
+2025-06-19 14:15:50,507 - WARNING - end_session() is deprecated and will be removed in v4 in the future. Use agentops.end_trace() instead.
+2025-06-19 14:15:50,788 - INFO - Session Replay for default.session trace: https://app.agentops.ai/sessions?trace_id=032f86723cda06fd2fe8c818b6cdde44
+2025-06-19 14:21:16,891 - INFO - Session Replay for default.session trace: https://app.agentops.ai/sessions?trace_id=032f86723cda06fd2fe8c818b6cdde44
