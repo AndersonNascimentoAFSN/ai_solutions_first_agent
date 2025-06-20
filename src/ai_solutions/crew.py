@@ -22,10 +22,6 @@ class AiSolutions():
       return Agent(
         config=self.agents_config['manager_agent'], 
         verbose=True,
-        tools=[
-          CSVCleanerMergerToJSONConverterTool(),
-          JSONSearchTool(json_path=json_file_path),
-        ],
         memory=True,
         reasoning=True,
         allow_code_execution=True,
@@ -34,12 +30,16 @@ class AiSolutions():
 
     @task
     def cleaner_merger_task(self) -> Task:
-      return Task(config=self.tasks_config["cleaner_merger_task"])
+      return Task(
+          config=self.tasks_config["cleaner_merger_task"],
+          tools=[CSVCleanerMergerToJSONConverterTool()]
+      )
   
     @task
     def answer_question_task(self) -> Task:
       return Task(
           config=self.tasks_config["answer_question_task"],
+          tools=[JSONSearchTool(json_path=json_file_path)]
     )
 
     @crew

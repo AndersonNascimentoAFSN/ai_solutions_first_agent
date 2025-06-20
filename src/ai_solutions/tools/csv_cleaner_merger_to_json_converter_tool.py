@@ -1,7 +1,13 @@
 import os
-from typing import List
+from typing import List, Type
 import pandas as pd
 from crewai.tools import BaseTool
+
+from pydantic import BaseModel, Field
+
+class CSVCleanerMergerToJSONConverterToolInput(BaseModel):
+      '''Argumentos da tool CSVCleanerMergerToJSONConverterTool'''
+      paths: List[str] = Field(description="Caminho do arquivo JSON salvo com os dados mesclados e limpos. Exemplo: /data/file.json")
 
 class CSVCleanerMergerToJSONConverterTool(BaseTool):
     """
@@ -23,6 +29,7 @@ class CSVCleanerMergerToJSONConverterTool(BaseTool):
         "Limpa, normaliza colunas e mescla múltiplos arquivos CSV, salvando o resultado como um JSON."
     )
     save: str = "json_path"
+    args_schema: Type[BaseModel] = CSVCleanerMergerToJSONConverterToolInput
 
     def _run(self, paths: List[str]) -> str:
         """
