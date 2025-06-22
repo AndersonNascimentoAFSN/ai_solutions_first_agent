@@ -35,7 +35,7 @@ cleaner_merger_task:
     - file_paths
   output_variables:
     - json_path 
-  agent: manager_agent
+  agent: agent_etl
 
 answer_question_task:
   description: >
@@ -115,4 +115,4 @@ answer_question_task:
   input_variables:
     - question
     - json_path
-  agent: manager_agent
+  agent: agent_qa

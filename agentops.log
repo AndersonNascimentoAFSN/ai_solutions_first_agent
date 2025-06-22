@@ -1,8 +1,9 @@
-2025-06-20 10:45:42,600 - INFO - [ConcurrentFuturesInstrumentor] Successfully instrumented concurrent.futures.ThreadPoolExecutor
-2025-06-20 10:45:42,600 - INFO - AgentOps: Successfully instrumented 'ConcurrentFuturesInstrumentor' for package 'python'.
-2025-06-20 10:45:42,603 - INFO - AgentOps: 'crewai' is the first-targeted agentic library. Will uninstrument providers if any are/become active.
-2025-06-20 10:45:42,612 - INFO - AgentOps: Successfully instrumented 'CrewaiInstrumentor' for package 'agentops.instrumentation.agentic.crewai'.
-2025-06-20 10:45:42,613 - INFO - Session Replay for default trace: https://app.agentops.ai/sessions?trace_id=c6a15d339aa9c82e0d378c67949ab59b
-2025-06-20 10:45:56,719 - WARNING - ToolEvent() is deprecated and will be removed in v4 in the future. Automatically tracked in v4.
-2025-06-20 10:47:09,914 - WARNING - end_session() is deprecated and will be removed in v4 in the future. Use agentops.end_trace() instead.
-2025-06-20 10:47:10,265 - INFO - Session Replay for default.session trace: https://app.agentops.ai/sessions?trace_id=c6a15d339aa9c82e0d378c67949ab59b
+2025-06-22 14:25:40,992 - INFO - [ConcurrentFuturesInstrumentor] Successfully instrumented concurrent.futures.ThreadPoolExecutor
+2025-06-22 14:25:40,992 - INFO - AgentOps: Successfully instrumented 'ConcurrentFuturesInstrumentor' for package 'python'.
+2025-06-22 14:25:40,993 - INFO - AgentOps: 'crewai' is the first-targeted agentic library. Will uninstrument providers if any are/become active.
+2025-06-22 14:25:41,002 - INFO - AgentOps: Successfully instrumented 'CrewaiInstrumentor' for package 'agentops.instrumentation.agentic.crewai'.
+2025-06-22 14:25:41,002 - INFO - Session Replay for default trace: https://app.agentops.ai/sessions?trace_id=92127ce0fbe6a7c43f74fa01a2f045b8
+2025-06-22 14:25:51,651 - WARNING - ToolEvent() is deprecated and will be removed in v4 in the future. Automatically tracked in v4.
+2025-06-22 14:26:54,242 - WARNING - end_session() is deprecated and will be removed in v4 in the future. Use agentops.end_trace() instead.
+2025-06-22 14:26:54,594 - INFO - Session Replay for default.session trace: https://app.agentops.ai/sessions?trace_id=92127ce0fbe6a7c43f74fa01a2f045b8
+2025-06-22 14:28:20,960 - INFO - Session Replay for default.session trace: https://app.agentops.ai/sessions?trace_id=92127ce0fbe6a7c43f74fa01a2f045b8

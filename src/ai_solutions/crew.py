@@ -18,9 +18,18 @@ class AiSolutions():
     tasks: List[Task]
 
     @agent
-    def manager_agent(self) -> Agent:
+    def agent_etl(self) -> Agent:
       return Agent(
-        config=self.agents_config['manager_agent'], 
+        config=self.agents_config['agent_etl'], 
+        verbose=True,
+        memory=True,
+        reasoning=True,
+      )
+    
+    @agent
+    def agent_qa(self) -> Agent:
+      return Agent(
+        config=self.agents_config['agent_qa'], 
         verbose=True,
         memory=True,
         reasoning=True,
@@ -48,7 +57,8 @@ class AiSolutions():
 
         return Crew(
           agents=[
-            self.manager_agent(),
+            self.agent_etl(),
+            self.agent_qa(),
           ],
           tasks=[
             self.cleaner_merger_task(),
