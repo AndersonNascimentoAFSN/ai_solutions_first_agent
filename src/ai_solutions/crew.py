@@ -1,4 +1,4 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
@@ -9,6 +9,8 @@ from ai_solutions.tools.csv_cleaner_merger_to_json_converter_tool import CSVClea
 
 project_root = os.getcwd()
 json_file_path = os.path.join(project_root, 'data', 'merged_cleaned.json')
+
+agent_etl_llm = LLM(model="gpt-4o-mini")
 
 @CrewBase
 class AiSolutions():
@@ -24,6 +26,7 @@ class AiSolutions():
         verbose=True,
         memory=True,
         reasoning=True,
+        llm=agent_etl_llm,
       )
     
     @agent
@@ -67,4 +70,5 @@ class AiSolutions():
           process=Process.sequential,
           memory=True,
           verbose=True,
+          planning=True,
     )
